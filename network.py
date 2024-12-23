@@ -8,6 +8,7 @@ class Network:
         self.biases = [numpy.random.randn(layer_size, 1) for layer_size in sizes[1:]]
         self.weights = [numpy.random.randn(sizes[i+1], sizes[i]) for i in range(len(sizes)-1)]
 
+
     def train(self, training_data: list[tuple], epoches: int, mini_batch_size: int, learning_rate: float, test_data:list[tuple]):
         print("training...")
         for j in range(epoches):
@@ -21,12 +22,14 @@ class Network:
             corrects = self.evaluate(test_data)
             print(f"epoch {j}: {corrects}/{len(test_data)}; {end_time-start_time} seconds")
 
+
     def evaluate(self, test_data) -> int:
         res = 0
         for x, y in test_data:
             res += self.evaluate_single(x, y)
         return res
         
+
     def evaluate_single(self, x, y) -> int:
         # x is 784 stuff
         # by the end, is 10 stuffs [0.21, 0.57, ...]
@@ -35,7 +38,6 @@ class Network:
             return 1 
         return 0
 
-        
 
     def run_mini_batch(self, mini_batch: list, learning_rate: int):
         nabla_b = [numpy.zeros(b.shape) for b in self.biases]  # zero-filled list of vectors to store change per mini batch
@@ -51,6 +53,7 @@ class Network:
         self.biases = [b-(learning_rate/len(mini_batch))*nb for b, nb in zip(self.biases, nabla_b)]  # += nabla_b
         # print("post mini", self.biases[1])
 
+
     # def feedforward(self, x):
     #     # place first layer activations
     #     # compute next layer (vectorized according to fancy equation on ur paper)
@@ -59,11 +62,13 @@ class Network:
     #         x = sigmoid(numpy.dot(w, x)+b) # happens vector wise
     #     return x
     
+
     def feedforward(self, a):
         """Return the output of the network if ``a`` is input."""
         for b, w in zip(self.biases, self.weights):
             a = sigmoid(numpy.dot(w, a)+b)
         return a
+
 
     def backprop(self, x, y):
         # init zero filled biases and weights
@@ -100,12 +105,11 @@ class Network:
         return nabla_w, nabla_b
 
 
-
-
 # helpers
 def sigmoid(z):
     """Sigmoid activation function."""
     return 1 / (1 + numpy.exp(-z))
+
 
 def sigmoid_prime(z):
     """Derivative of the sigmoid function."""
