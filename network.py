@@ -34,7 +34,7 @@ class Network:
         # x is 784 stuff
         # by the end, is 10 stuffs [0.21, 0.57, ...]
         # y is 10 stuffs too [0.0, 1.0, 0.0, ...] (2 is correct number)
-        if numpy.argmax(self.feedforward(x)) == numpy.argmax(y):
+        if numpy.argmax(self.feedforward(x)) == y:
             return 1 
         return 0
 
